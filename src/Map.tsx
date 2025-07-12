@@ -1,30 +1,25 @@
-import React, {useRef, useState} from 'react';
-import MapSvg from "./MapSvg";
+import React, { useEffect, useState } from 'react';
+import MapSvg from './MapSvg';
+import VisitedCountries from './main';
 
-const Map = () => {
+interface MapProps {
+	plugin: VisitedCountries;
+}
 
-	const [pos, setPos] = useState({ x: 0, y: 0 });
-	const [dragging, setDragging] = useState(false);
-	const start = useRef({ x: 0, y: 0 });
+const Map = ({ plugin }: MapProps) => {
+	const [countries, setCountries] = useState<Set<string>>(new Set(plugin.data.visitedCountries));
 
-	const onMouseDown = (e: React.MouseEvent) => {
-		setDragging(true);
-		start.current = { x: e.clientX - pos.x, y: e.clientY - pos.y };
-	};
-
-	const onMouseMove = (e: React.MouseEvent) => {
-		if (!dragging) return;
-		setPos({
-			x: e.clientX - start.current.x,
-			y: e.clientY - start.current.y,
-		});
-	};
-
-	const onMouseUp = () => setDragging(false);
+	useEffect(() => {
+		plugin.data = { ...plugin.data, visitedCountries: Array.from(countries) };
+		plugin.savePluginData()
+	}, [countries]);
 
 	return (
 		<div className='countries-map'>
-			<MapSvg/>
+			<MapSvg
+				countries={countries}
+				setCountries={setCountries}
+			/>
 		</div>
 	);
 };
