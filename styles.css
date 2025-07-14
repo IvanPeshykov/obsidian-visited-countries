@@ -1,30 +1,23 @@
 .countries-map {
-
-	position: absolute;
-	left: 0;
-	top: 0;
-
-	width: 100%;
-	height: 100%;
-
 	background-color: #333333;
+	width: 100px;
 }
 
 
-.countries-map-svg path {
+path {
   fill: #686868;
+	transition: 0.4s;
 }
 
-
-.countries-map-svg path.hovered-country {
+path:hover {
 	cursor: pointer;
 	fill: rgba(105, 105, 105, 0.67);
 	transition: 0.4s;
 }
 
-
-.countries-map-svg path.visited-country {
+path.visited-country {
 	fill: blue;
 	cursor: pointer;
+	transition: 0.4s;
 }
 

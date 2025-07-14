@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useRef} from 'react';
+import {UncontrolledReactSVGPanZoom, ViewerMouseEvent} from "react-svg-pan-zoom";
 
 interface IProps {
 	countries: Set<string>;
@@ -7,11 +8,15 @@ interface IProps {
 
 const MapSvg = ({ countries, setCountries }: IProps) => {
 
-	const svgRef = React.useRef<SVGSVGElement>(null);
+	const Viewer = useRef<UncontrolledReactSVGPanZoom | null>(null);
 
 	useEffect(() => {
-		if (!svgRef.current) return;
-		const paths = svgRef.current.querySelectorAll('path');
+		Viewer?.current?.fitToViewer();
+	}, []);
+
+	// Rendering
+	useEffect(() => {
+		const paths = document.querySelectorAll('path');
 		paths.forEach(path => {
 			const countryName = path.getAttribute('name');
 			if (countryName) {
@@ -24,33 +29,10 @@ const MapSvg = ({ countries, setCountries }: IProps) => {
 		});
 	}, [countries]);
 
-
-	const handleMouseOver = (e: React.MouseEvent<SVGSVGElement>) => {
-		const target = e.target as SVGElement;
-		if (target.tagName === 'path') {
-			const name = target.getAttribute('name');
-			if (name && svgRef.current) {
-				svgRef.current.querySelectorAll(`path[name="${name}"]`)
-					.forEach(path => path.classList.add('hovered-country'));
-			}
-		}
-	};
-
-	const handleMouseOut = (e: React.MouseEvent<SVGSVGElement>) => {
-		const target = e.target as SVGElement;
-		if (target.tagName === 'path') {
-			const name = target.getAttribute('name');
-			if (name && svgRef.current) {
-				svgRef.current.querySelectorAll(`path[name="${name}"]`)
-					.forEach(path => path.classList.remove('hovered-country'));
-			}
-		}
-	};
-
-	const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
-		e.preventDefault();
-		const target = e.target as SVGElement;
-		if (target.tagName === 'path') {
+	// Country selection
+	const selectCountry = (e: ViewerMouseEvent<SVGElement>) => {
+		const target = e.SVGViewer.querySelector<SVGPathElement>(`path:hover, path:active`);
+		if (target?.tagName === 'path') {
 			const countryName = target.getAttribute('name');
 			if (countryName) {
 				setCountries(prev => {
@@ -65,8 +47,17 @@ const MapSvg = ({ countries, setCountries }: IProps) => {
 			}
 		}
 	};
+
 	return (
-		<svg ref={svgRef} onMouseDown={handleMouseDown} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} className='countries-map-svg' baseProfile="tiny" fill="#ececec" height="857" stroke="black" strokeLinecap="round"
+		<UncontrolledReactSVGPanZoom
+			ref={Viewer}
+			height={600} width={800}
+			onClick={e => selectCountry(e as unknown as ViewerMouseEvent<SVGElement>)}
+			background={'#333333'}
+			SVGBackground={'#333333'}
+
+		>
+		<svg  className='countries-map-svg' baseProfile="tiny" fill="#ececec" height="857" stroke="black" strokeLinecap="round"
 			 strokeLinejoin="round" strokeWidth=".2" version="1.2" viewBox="0 0 2000 857" width="2000"
 			 xmlns="http://www.w3.org/2000/svg">
 			<path
@@ -1571,6 +1562,7 @@ const MapSvg = ({ countries, setCountries }: IProps) => {
 			<circle cx="1798.2" cy="719.3" id="2">
 			</circle>
 		</svg>
+		</UncontrolledReactSVGPanZoom>
 	)
 }
 

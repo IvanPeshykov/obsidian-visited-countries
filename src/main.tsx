@@ -48,6 +48,8 @@ export default class VisitedCountries extends Plugin {
 	}
 
 	async activateView() {
+
+		// Check if the view is already open, if so, reveal it, otherwise create a new one
 		const leaves = this.app.workspace.getLeavesOfType(VIEW_TYPE_CUSTOM);
 		if (leaves.length > 0) {
 			await this.app.workspace.revealLeaf(leaves[0]);
