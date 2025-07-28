@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from 'react';
-import {TOOL_PAN, UncontrolledReactSVGPanZoom, ViewerMouseEvent} from "react-svg-pan-zoom";
+import {TOOL_PAN, UncontrolledProps, UncontrolledReactSVGPanZoom, ViewerMouseEvent} from "react-svg-pan-zoom";
+import Tooltip from "./Tooltip";
 
 interface IProps {
 	countries: Set<string>;
@@ -10,12 +11,29 @@ interface IProps {
 const MapSvg = ({countries, setCountries, size}: IProps) => {
 
 	const Viewer = useRef<UncontrolledReactSVGPanZoom | null>(null);
+	const [tooltip, setTooltip] = React.useState<{visible: boolean, x: number, y: number, text: string}>({visible: false, x: 0, y: 0, text: ""});
 
 	useEffect(() => {
 		Viewer?.current?.fitToViewer();
 		Viewer?.current?.setPointOnViewerCenter(500, 0, 0.8)
 	}, []);
 
+	const handleMouseMove = (e: ViewerMouseEvent<SVGElement>) => {
+		const svg = e.SVGViewer;
+		const target = svg.querySelector<SVGPathElement>(`path:hover, path:active`);
+		if (!target) return setTooltip(prev => ({...prev, visible: false}));
+
+		const countryName = target.getAttribute('name');
+		if (countryName) {
+			const rect = svg.getBoundingClientRect();
+			setTooltip({
+				visible: true,
+				x: e.originalEvent.clientX - rect.left + 20,
+				y: e.originalEvent.clientY - rect.top + 70,
+				text: countryName
+			});
+		}
+	};
 
 	// Rendering
 	useEffect(() => {
@@ -52,10 +70,14 @@ const MapSvg = ({countries, setCountries, size}: IProps) => {
 	};
 
 	return (
+		<div>
 			<UncontrolledReactSVGPanZoom
 				ref={Viewer}
 				width={size.width}
 				height={size.height}
+				onZoom={() => setTooltip(prev => ({...prev, visible: false}))}
+				onPan={() => setTooltip(prev => ({...prev, visible: false}))}
+				onMouseMove={e => handleMouseMove(e as unknown as ViewerMouseEvent<SVGElement>)}
 				onClick={e => selectCountry(e as unknown as ViewerMouseEvent<SVGElement>)}
 				background={'#333333'}
 				SVGBackground={'#333333'}
@@ -1592,6 +1614,8 @@ const MapSvg = ({countries, setCountries, size}: IProps) => {
 					</circle>
 				</svg>
 			</UncontrolledReactSVGPanZoom>
+			<Tooltip {...tooltip}/>
+		</div>
 	)
 }
 

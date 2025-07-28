@@ -5,19 +5,23 @@
 }
 
 .countries-map path {
-  fill: #686868;
+  	fill: #686868;
 	transition: 0.4s;
 }
 
 .countries-map path:hover {
 	cursor: pointer;
-	fill: rgba(105, 105, 105, 0.67);
+	fill: #696969AA;
 	transition: 0.4s;
 }
 
 .countries-map path.visited-country {
-	fill: rgba(244, 166, 31, 0.63);
+	fill: #F4A61FA0;
 	cursor: pointer;
 	transition: 0.4s;
+}
+
+.countries-map path.visited-country:hover {
+	fill: rgba(244, 166, 31, 0.5);
 }
 
