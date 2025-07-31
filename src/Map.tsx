@@ -11,7 +11,7 @@ const Map = ({ plugin }: MapProps) => {
 	const [countries, setCountries] = useState<Set<string>>(new Set(plugin.data.visitedCountries));
 	const ref = useRef<HTMLDivElement>(null);
 	const [size, setSize] = useState({ width: 0, height: 0 });
-	const [mapMode, setMapMode] = useState(false);
+	const [mapMode, setMapMode] = useState(true);
 
 	useEffect(() => {
 		if (!ref.current) return;
