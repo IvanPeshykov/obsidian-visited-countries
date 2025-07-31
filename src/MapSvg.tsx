@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
-import {TOOL_PAN, UncontrolledProps, UncontrolledReactSVGPanZoom, ViewerMouseEvent} from "react-svg-pan-zoom";
-import Tooltip from "./Tooltip";
+import {TOOL_PAN, UncontrolledReactSVGPanZoom, ViewerMouseEvent} from "react-svg-pan-zoom";
+import Tooltip from "./components/Tooltip";
 
 interface IProps {
 	countries: Set<string>;
@@ -12,11 +12,6 @@ const MapSvg = ({countries, setCountries, size}: IProps) => {
 
 	const Viewer = useRef<UncontrolledReactSVGPanZoom | null>(null);
 	const [tooltip, setTooltip] = React.useState<{visible: boolean, x: number, y: number, text: string}>({visible: false, x: 0, y: 0, text: ""});
-
-	useEffect(() => {
-		Viewer?.current?.fitToViewer();
-		Viewer?.current?.setPointOnViewerCenter(500, 0, 0.8)
-	}, []);
 
 	const handleMouseMove = (e: ViewerMouseEvent<SVGElement>) => {
 		const svg = e.SVGViewer;
@@ -82,6 +77,7 @@ const MapSvg = ({countries, setCountries, size}: IProps) => {
 				background={'#333333'}
 				SVGBackground={'#333333'}
 				defaultTool={TOOL_PAN}
+
 				scaleFactorMin={0.2}
 				toolbarProps={{
 					position: "bottom",

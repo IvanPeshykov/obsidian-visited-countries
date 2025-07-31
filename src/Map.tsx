@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import MapSvg from './MapSvg';
 import VisitedCountries from './main';
+import Stats from "./Stats";
 
 interface MapProps {
 	plugin: VisitedCountries;
@@ -10,6 +11,7 @@ const Map = ({ plugin }: MapProps) => {
 	const [countries, setCountries] = useState<Set<string>>(new Set(plugin.data.visitedCountries));
 	const ref = useRef<HTMLDivElement>(null);
 	const [size, setSize] = useState({ width: 0, height: 0 });
+	const [mapMode, setMapMode] = useState(false);
 
 	useEffect(() => {
 		if (!ref.current) return;
@@ -31,7 +33,8 @@ const Map = ({ plugin }: MapProps) => {
 
 	return (
 		<div ref={ref} className={`countries-map`}>
-				<MapSvg countries={countries} setCountries={setCountries} size={size} />
+				{mapMode ? <MapSvg countries={countries} setCountries={setCountries} size={size} /> : <Stats countries={countries} setCountries={setCountries}/>}
+				<button onClick={() => setMapMode(prev => !prev)} className='switch-button'>{mapMode ? "To statistics view" : "To map view"}</button>
 		</div>
 	);
 };

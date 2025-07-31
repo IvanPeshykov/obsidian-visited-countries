@@ -24,4 +24,91 @@
 .countries-map path.visited-country:hover {
 	fill: rgba(244, 166, 31, 0.5);
 }
+.switch-button {
+	position: fixed;
+	cursor: pointer;
+	top: 10vh;
+	right: 5%;
+}
 
+.stats {
+	display: flex;
+	align-items: center;
+	background-color: #333333;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.stats-title {
+	font-size: 30px;
+	color: #F4A61F;
+	margin-bottom: 20px;
+}
+
+.stats-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-top: 20px;
+	width: 100%;
+	column-gap: 100px;
+	row-gap: 20px;
+}
+
+.stats-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.stats-item h4 {
+	font-size: 3rem;
+	color: #F4A61F;
+	margin-bottom: 1px;
+}
+
+.stats-item h5 {
+	font-size: 1.5rem;
+	color: #8a8585;
+	margin-top: 0;
+}
+
+.countries-list {
+	width: 100%;
+	align-self: start;
+	padding-left: 20px;
+}
+
+.countries-list h4 {
+	font-size: 20px;
+	color: #F4A61F;
+	margin-bottom: 10px;
+}
+
+.countries-list ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.countries-list-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.countries-list-item {
+	font-size: 16px;
+	color: #8a8585;
+	margin-bottom: 10px;
+	border-left: 2px solid #F4A61F;
+	padding-left: 8px;
+}
+
+.countries-list-item:hover {
+	color: #F4A61F;
+	cursor: pointer;
+}
