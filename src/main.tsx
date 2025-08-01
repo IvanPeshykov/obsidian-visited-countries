@@ -28,7 +28,7 @@ export default class VisitedCountries extends Plugin {
 		// add a command to open the view
 		this.addCommand({
 			id: 'Visited Countries',
-			name: 'Open Visited Countries',
+			name: 'Open Map',
 			icon: 'map',
 			callback: () => {
 				this.activateView();
