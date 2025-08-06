@@ -4,25 +4,27 @@
 	height: 100%;
 }
 
-.countries-map path {
+.countries-map path[name] {
   	fill: #686868;
+	stroke: #000000;
+	stroke-width: 0.05;
 	transition: 0.4s;
 }
 
 .countries-map path:hover {
 	cursor: pointer;
-	fill: #696969AA;
+	fill: rgb(97, 97, 97);
 	transition: 0.4s;
 }
 
 .countries-map path.visited-country {
-	fill: #F4A61FA0;
+	fill: #b37c1b;
 	cursor: pointer;
 	transition: 0.4s;
 }
 
 .countries-map path.visited-country:hover {
-	fill: rgba(244, 166, 31, 0.5);
+	fill: #aa7313;
 }
 .switch-button {
 	position: fixed;
