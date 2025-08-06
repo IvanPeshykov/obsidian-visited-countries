@@ -1,7 +1,7 @@
 {
 	"id": "visited-countries",
 	"name": "Visited Countries",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"minAppVersion": "0.15.0",
 	"description": "The interactive map where you can select countries that you've visited.",
 	"author": "Ivan Peshykov",

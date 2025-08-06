@@ -9,7 +9,7 @@ interface IProps {
 
 const Stats = ({countries, setCountries}: IProps) => {
 
-	const worldPercent = (countries.size / 195) * 100;
+	const worldPercent = (countries.size / 197) * 100;
 
 	return (
 		<div className='stats'>
@@ -20,7 +20,7 @@ const Stats = ({countries, setCountries}: IProps) => {
 					<h5>Countries</h5>
 				</div>
 
-				<CircularProgressBar progress={(countries.size / 195) * 100}/>
+				<CircularProgressBar progress={(countries.size / 197) * 100}/>
 				<div className={'stats-item'}>
 					<h4>{worldPercent.toFixed(1)}%</h4>
 					<h5>World</h5>
